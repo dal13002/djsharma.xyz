@@ -7,45 +7,46 @@ sudo yum update -y
 sudo amazon-linux-extras install docker -y
 sudo service docker start
 
-# Fix permissions; this requires reboot, so we won't do it for POC
-#sudo usermod -a -G docker ec2-user
+# Fix permissions; this requires reboot, so we will still keep using "sudo" infront of docker for POC
+sudo usermod -a -G docker ec2-user
+
+# Make app directory
+mkdir /home/ec2-user/app
 
 # git install / pull app repo
 sudo yum install git -y
+cd /home/ec2-user/app && git clone https://github.com/dal13002/djsharma.xyz.git
 
-# nginx config
-mkdir /nginx
-touch /nginx/server.crt
-touch /nginx/server.key
-touch /nginx/ca.crt
-cat <<EOT >> /nginx/nginx.conf
-server {
-    listen              443 ssl;
-    server_name         djsharma.xyz;
-    ssl_certificate     /etc/nginx/server.crt;
-    ssl_certificate_key /etc/nginx/server.key;
-    ssl_protocols       TLSv1.2 TLSv1.3;
-    ssl_client_certificate /etc/nginx/ca.crt;
-    ssl_verify_client      optional;
+# make ssl keys for cloudflare
+openssl req -x509 -nodes -newkey rsa:4096 -keyout key.pem -out cert.pem -days 730 -subj '/CN=djsharma.xyz'
 
-    location / {
-      if ($ssl_client_verify != SUCCESS) {
-        return 403;
+# make the nginx config file
+cat <<EOT >> /home/ec2-user/app/nginx.conf
+events {
+  worker_connections  1024;
+}
+http {
+  server {
+      listen              443 ssl;
+      server_name         djsharma.xyz;
+      ssl_certificate     /etc/nginx/server.crt;
+      ssl_certificate_key /etc/nginx/server.key;
+      ssl_protocols       TLSv1.2 TLSv1.3;
+
+      location / {
+        include  /etc/nginx/mime.types;
       }
-      return 200 'hit server';
-      #proxy_pass      http://127.0.0.1:3000;
-    }
+  }
 }
 EOT
 
 # make sure nginx runs on reboots
 ## TODO::
 
-# run the docker container for nginx
-# NOTE- files will be blank at first, and will need to be restarted
+# run the nginx docker container mounting app, certs, and config
 sudo docker run --name nginx-container \
--v /nginx/nginx.conf:/etc/nginx/nginx.conf:ro \
--v /nginx/server.crt:/etc/nginx/server.crt \
--v /nginx/server.key:/etc/nginx/server.key \
--v /nginx/ca.crt:/etc/nginx/ca.crt \
--p 443:80 -d nginx:latest
+-v /home/ec2-user/app/nginx.conf:/etc/nginx/nginx.conf:ro \
+-v /home/ec2-user/app/cert.pem:/etc/nginx/server.crt \
+-v /home/ec2-user/app/key.pem:/etc/nginx/server.key \
+-v  /home/ec2-user/app/djsharma.xyz/app/:/etc/nginx/html/ \
+-p 443:443 -d nginx:latest
