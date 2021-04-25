@@ -14,17 +14,17 @@ The following list is done via terraform
 This is the list of variables that need to be set for terraform to run
 ```
 # cloudflare
-TF_VAR_CLOUDFLARE_API_KEY=
-TF_VAR_CLOUDFLARE_EMAIL=
-TF_VAR_CLOUDFLARE_API_USER_SERVICE_KEY=
+CLOUDFLARE_API_KEY=
+CLOUDFLARE_EMAIL=
+CLOUDFLARE_API_USER_SERVICE_KEY=
 
 # aws
-TF_VAR_AWS_ACCESS_KEY_ID=
-TF_VAR_AWS_AWS_SECRET_ACCESS_KEY=
+AWS_ACCESS_KEY_ID=
+AWS_AWS_SECRET_ACCESS_KEY=
 
-# common
-TF_VAR_ZONE=djsharma.xyz
-TF_VAR_SITE_HOSTNAME=djsharma.xyz
+# ibm cloud
+IC_API_KEY=
+
 ```
 
 ## Prerequisite

@@ -52,7 +52,7 @@ resource "aws_security_group" "allow_443_22" {
   }
 }
 
-# internet gateway
+# Internet gateway
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.web_vpc.id
 
@@ -61,7 +61,7 @@ resource "aws_internet_gateway" "gw" {
   }
 }
 
-# manage default routing table for our vpc
+# Manage default routing table for our vpc
 resource "aws_default_route_table" "web_vpc" {
   default_route_table_id = aws_vpc.web_vpc.default_route_table_id
 
@@ -84,7 +84,7 @@ resource "aws_default_route_table" "web_vpc" {
 # Public key
 resource "aws_key_pair" "pub_key" {
   key_name   = "dj-pub"
-  public_key = file("publickey.crt")
+  public_key = file("tf_files/publickey.crt")
 }
 
 # AWS Server
@@ -96,7 +96,7 @@ resource "aws_instance" "web" {
   associate_public_ip_address = true
   vpc_security_group_ids      = [aws_security_group.allow_443_22.id]
 
-  user_data = file("post_provision_ec2.sh")
+  user_data = file("tf_files/ec2_post_provision.sh")
 
   tags = {
     Name = local.resource_name_tag

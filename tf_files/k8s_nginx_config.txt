@@ -1,0 +1,16 @@
+events {
+  worker_connections  1024;
+}
+http {
+  server {
+      listen              443 ssl;
+      server_name         djsharma.xyz;
+      ssl_certificate     /etc/nginx/server.crt;
+      ssl_certificate_key /etc/nginx/server.key;
+      ssl_protocols       TLSv1.2 TLSv1.3;
+
+      location / {
+        include  /etc/nginx/mime.types;
+      }
+  }
+}
