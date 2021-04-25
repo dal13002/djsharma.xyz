@@ -1,5 +1,5 @@
 # Infrastructure as code for personal site
-This repo contains all code needed to create the infrastructure and application deployment for [djsharma.xyz](https://djsharma.xyz). The goal is to host this personal site as cheap as possible in multiple clouds using multiple technology stacks and use a highly avaiable proxy as the entry point for the user. The total cost of the site is $9.34 which was to buy the domain djsharma.xyz for 2 years.
+This repo contains all code needed to create the infrastructure and application deployment for [djsharma.xyz](https://djsharma.xyz). The goal is to host this personal site as cost effective as possible in multiple clouds using multiple technology stacks and use a highly avaiable proxy as the entry point for the user. The total cost of the site is $9.34 which was to buy the domain djsharma.xyz for 2 years.
 
 ![overview](app/images/overview.png)
 
@@ -25,6 +25,9 @@ This repo contains all code needed to create the infrastructure and application 
 - Kubernetes Resources (namespace, configmap, deployment)
 5. **Azure**
 - TODO::
+6. **CloudFlare**
+- DNS Hosting
+- Website Proxy 
 
 ## Environment Variables 
 This is the list of variables that need to be set for terraform to run
