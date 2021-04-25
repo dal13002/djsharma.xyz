@@ -4,14 +4,14 @@ This repo contains all code needed to create the infrastructure and application 
 ![overview](app/images/overview.png)
 
 ## Notable Points
-1. End to end encryption
+1. **End to end encryption**
 - User connects to CloudFlare proxy which terminates TLS
 - CloudFlare connects to origin(s) which use self signed certificates
-2. Network Filtering only allows CloudFlare to connect to origin(s)
+2. **Network Filtering only allows CloudFlare to connect to origin(s)**
 - Use of security groups to restrict connections only from CloudFlare on AWS EC2 instance
 - Use of calico to restrict connections only from CloudFlare on IKS Cluster
 - Use of IP talbes to restrict connections only from CloudFlare on Azure VM
-3. AWS
+3. **AWS**
 - VPC
 - VPC Subnets
 - Security Groups
@@ -19,11 +19,11 @@ This repo contains all code needed to create the infrastructure and application 
 - Internet Gateway
 - EC2 Instance with cloud init script
 - Docker
-4. IBM Cloud
+4. **IBM Cloud**
 - Kuberentes Cluster
 - Calico 
 - Kubernetes Resources (namespace, configmap, deployment)
-5. Use of Azure
+5. **Azure**
 - TODO::
 
 ## Environment Variables 
