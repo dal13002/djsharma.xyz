@@ -24,7 +24,12 @@ This repo contains all code needed to create the infrastructure and application 
 - Calico 
 - Kubernetes Resources (namespace, configmap, deployment)
 5. **Azure**
-- TODO::
+- Resource Group
+- Virtual Network
+- Subnet in Virtual Network
+- Linux Virtual Machine with cloud init script
+- Linux Uncomplicated Firewall (ufw)
+- Nginx
 6. **CloudFlare**
 - DNS Hosting
 - Website Proxy 
@@ -43,6 +48,10 @@ AWS_AWS_SECRET_ACCESS_KEY=
 
 # ibm cloud
 IC_API_KEY=
+
+# Azure
+# Login to the cli since running locally: 
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli
 ```
 
 ## Prerequisite

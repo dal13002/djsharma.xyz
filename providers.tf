@@ -16,6 +16,10 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = ">= 2.0"
     }
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=2.46.0"
+    }
   }
 }
 
@@ -30,6 +34,11 @@ provider "ibm" {
 
 # Configure the cloudflare provider
 provider "cloudflare" {
+}
+
+# Configure the Microsoft Azure Provider
+provider "azurerm" {
+  features {}
 }
 
 # Configure kuberentes provider based on IBM Cloud data
