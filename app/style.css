@@ -57,7 +57,8 @@ body {
   grid-template-columns: 1fr 1fr;
 }
 
-.profile-image-wrapper img {
+.profile-image-wrapper > img {
+  height: 90vh;
   width: 100%;
 }
 
