@@ -65,5 +65,5 @@ IC_API_KEY=
 We will be using CloudFlare to configure DNS, and to act as a proxy. Either buy a domain directly from CloudFlare or delegate the domain to them via NS records on your authority.
 
 ## Considerations
-1. CloudFlare is not loading balancing between the different origins as this would cost monthly. CloudFlare is only using round robin via the multiple a-records but does not check the health of the endpoints.
+1. CloudFlare is not load balancing between the different origins as this would cost monthly. CloudFlare is only using round robin via the multiple a-records but does not check the health of the endpoints.
 2. This project is meant to show infrastructure as code and not meant for application deployment. Normally CI/CD (ie Jenkins) would be used of application deployment, but in this case we get the application deployed via simple scripts and do not manage the lifecyle. In this specific case it is often easier to delete the Infrastructure (ie Kubernetes deployment, EC2 instance) and have terraform reapply it vs trying to patch the application.
