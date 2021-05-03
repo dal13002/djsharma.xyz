@@ -59,7 +59,8 @@ IC_API_KEY=
 2. [Free Tier AWS Account](https://aws.amazon.com/free/)
 3. [Free Tier CloudFlare Account](https://www.cloudflare.com/plans/)
 4. [Free Teir IBM Cloud Account](https://www.ibm.com/cloud/free)
-4. Ownership of a domain- djsharma.xyz in this case
+5. [Free Teir Azure Account](https://azure.microsoft.com/en-us/free/)
+6. Ownership of a domain- djsharma.xyz in this case
 
 ## Delegate DNS to CloudFlare
 We will be using CloudFlare to configure DNS, and to act as a proxy. Either buy a domain directly from CloudFlare or delegate the domain to them via NS records on your authority.
