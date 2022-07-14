@@ -25,6 +25,7 @@ terraform {
 
 # Configure the AWS provider
 provider "aws" {
+  region  = "us-east-2"
 }
 
 # Configure the ibm cloud provider
