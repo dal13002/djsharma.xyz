@@ -1,7 +1,7 @@
 # Resource group
 resource "azurerm_resource_group" "dj_rg" {
   name     = "dj-rg"
-  location = "East US"
+  location = "East US 2"
 }
 
 # Virtual network
@@ -25,7 +25,9 @@ resource "azurerm_public_ip" "web_public_ip" {
   name                = local.resource_name_tag
   location            = azurerm_resource_group.dj_rg.location
   resource_group_name = azurerm_resource_group.dj_rg.name
-  allocation_method   = "Dynamic"
+  allocation_method   = "Static"
+  zones           = ["2"]
+  sku = "Standard"
 }
 
 # Interface
@@ -42,12 +44,50 @@ resource "azurerm_network_interface" "web_server_interface" {
   }
 }
 
+# SG- We will allow all and restrict using ip tables on the VM for Azure. But can restrict here
+resource "azurerm_network_security_group" "web_server_sg" {
+  name                = local.resource_name_tag
+  location            = azurerm_resource_group.dj_rg.location
+  resource_group_name = azurerm_resource_group.dj_rg.name
+
+  security_rule {
+    name                       = "allow-all-ingress"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  security_rule {
+    name                       = "allow-all-egres"
+    priority                   = 100
+    direction                  = "Outbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+}
+
+# Link sg to the network interface
+resource "azurerm_network_interface_security_group_association" "web_server_to_sg" {
+  network_interface_id          = azurerm_network_interface.web_server_interface.id
+  network_security_group_id     = azurerm_network_security_group.web_server_sg.id
+}
+
 # Ubuntu VM- using IPtables for security
 resource "azurerm_linux_virtual_machine" "web_server" {
   name                = local.resource_name_tag
   resource_group_name = azurerm_resource_group.dj_rg.name
   location            = azurerm_resource_group.dj_rg.location
   size                = "Standard_B1s"
+  zone                = "2"
   admin_username      = "adminuser"
   network_interface_ids = [
     azurerm_network_interface.web_server_interface.id,

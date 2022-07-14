@@ -3,7 +3,7 @@
 # Apply the calico rules via the downloaded calico config
 # We are hardcoding the cloudflare cidrs here but that is okay...
 # the real solution (write calico provider) would not use this
-cat <<EOF | calicoctl apply -c ${CONFIGFILE} -f - 
+cat <<EOF | calicoctl --allow-version-mismatch apply -c ${CONFIGFILE} -f - 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
 metadata:
